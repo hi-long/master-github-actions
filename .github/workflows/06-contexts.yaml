@@ -1,0 +1,43 @@
+name: 06 - Contexts
+on:
+  # push:
+  workflow_dispatch:
+    inputs:
+      debug: 
+        type: boolean
+        default: true
+jobs:
+  echo-data:
+    runs-on: ubuntu-latest
+    env:
+      MY_JOB_VAR: 'job'
+      MY_OVERWRITTEN_VAR: 'job'
+    steps:
+      - name: Display Information
+        run: |
+          echo "Event name: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "SHA: ${{ github.sha }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Workflow: ${{ github.workflow }}"
+          echo "Run ID: ${{ github.run_id }}"
+          echo "Run number: ${{ github.run_number }}"
+      - name: Retrieve Variables
+        run: |
+          echo "The first variable of the repo: ${{ vars.FIRST_VAR }}"
+      - name: Print Env Variables
+        env:
+          MY_OVERWITTEN_VAR: 'step'
+        run: |
+          echo "Workflow env: ${{ env.MY_WORKFLOW_VAR }}"
+          echo "Overwitten env: ${{ env.MY_OVERWITTEN_VAR }}"
+      - name: Print Env Variables
+        run: |
+          echo "Workflow env: ${{ env.MY_WORKFLOW_VAR }}"
+          echo "Overwitten env: ${{ env.MY_OVERWITTEN_VAR }}"
+
+run-name: 06 - Contexts | DEBUG - ${{ inputs.debug }}
+
+env:
+  MY_WORKFLOW_VAR: 'workflow'
+  MY_OVERWRITTEN_VAR: 'workflow'
